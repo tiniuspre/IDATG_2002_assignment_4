@@ -9,7 +9,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any, ClassVar
 
-from utils import (
+from db_utils.utils import (
     bulk_insert,
     count,
     delete,
