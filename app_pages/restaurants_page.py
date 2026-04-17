@@ -194,6 +194,11 @@ class RestaurantsPage:
             delete_row(self.conn, "restaurants", "restaurant_id = ?", (sel_id,))
             st.success("Deleted.")
             st.rerun()
+        except sqlite3.IntegrityError:
+            st.error(
+                "Cannot delete this restaurant — it has existing orders or "
+                "other linked records. Close the restaurant instead (uncheck 'Open')."
+            )
         except sqlite3.Error as exc:
             st.error(f"Could not delete: {exc}")
 
