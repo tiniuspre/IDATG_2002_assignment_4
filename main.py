@@ -1,10 +1,12 @@
 """Streamlit entry point."""
 from __future__ import annotations
 
+import sqlite3
+
 import streamlit as st
 
-from db_utils.db import get_connection, init_db
 from app_pages import restaurants_page, visualization_page
+from db_utils.db import get_connection, init_db
 
 
 def configure() -> None:
@@ -13,12 +15,13 @@ def configure() -> None:
 
 
 @st.cache_resource
-def get_conn():
+def get_conn() -> sqlite3.Connection:
     """Return a shared SQLite connection for the Streamlit session."""
     return get_connection()
 
 
 def main() -> None:
+    """Configure Streamlit, init the DB, and dispatch to the selected page."""
     configure()
     init_db()
     conn = get_conn()

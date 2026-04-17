@@ -1,4 +1,4 @@
-"""Visualization page"""
+"""Visualization page."""
 from __future__ import annotations
 
 import sqlite3
@@ -6,7 +6,6 @@ import sqlite3
 import pandas as pd
 import plotly.express as px
 import streamlit as st
-
 
 REVENUE_BY_CATEGORY_SQL = """
     SELECT c.name AS category,
@@ -25,6 +24,7 @@ class VisualizationPage:
     """Renders the revenue-by-category chart."""
 
     def __init__(self, conn: sqlite3.Connection) -> None:
+        """Store the SQLite connection."""
         self.conn = conn
 
     def _fetch_data(self) -> pd.DataFrame:
@@ -55,6 +55,7 @@ class VisualizationPage:
         )
 
     def render(self) -> None:
+        """Render the revenue-by-category page."""
         st.title("Revenue by category")
         st.write(
             "Total revenue from delivered orders, grouped by restaurant "

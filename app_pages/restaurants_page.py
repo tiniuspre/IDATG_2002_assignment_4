@@ -1,4 +1,4 @@
-"""Restaurants page"""
+"""Restaurants page."""
 from __future__ import annotations
 
 import sqlite3
@@ -8,7 +8,6 @@ import streamlit as st
 
 from db_utils.handlers import CategoryHandler, RestaurantHandler
 from db_utils.utils import delete as delete_row
-
 
 DISPLAY_COLUMNS = [
     "restaurant_id",
@@ -27,6 +26,7 @@ class RestaurantsPage:
     """Renders the restaurants CRUD page."""
 
     def __init__(self, conn: sqlite3.Connection) -> None:
+        """Store the connection and build the handlers."""
         self.conn = conn
         self.restaurants = RestaurantHandler(conn)
         self.categories = CategoryHandler(conn)
@@ -96,7 +96,7 @@ class RestaurantsPage:
                 )
                 st.success(f"Added restaurant (id {new_id}).")
                 st.rerun()
-            except Exception as exc:
+            except sqlite3.Error as exc:
                 st.error(f"Could not add: {exc}")
 
     def _render_edit_delete(
@@ -186,7 +186,7 @@ class RestaurantsPage:
             self.restaurants.update(sel_id, **fields)
             st.success("Saved.")
             st.rerun()
-        except Exception as exc:
+        except sqlite3.Error as exc:
             st.error(f"Could not save: {exc}")
 
     def _handle_delete(self, sel_id: int) -> None:
@@ -194,10 +194,11 @@ class RestaurantsPage:
             delete_row(self.conn, "restaurants", "restaurant_id = ?", (sel_id,))
             st.success("Deleted.")
             st.rerun()
-        except Exception as exc:
+        except sqlite3.Error as exc:
             st.error(f"Could not delete: {exc}")
 
     def render(self) -> None:
+        """Render the full restaurants page."""
         st.title("Restaurants")
 
         cats = self._load_categories()
