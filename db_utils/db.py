@@ -2,12 +2,12 @@ from __future__ import annotations
 
 import os
 import sqlite3
+from collections.abc import Generator
 from contextlib import contextmanager
 from pathlib import Path
-from typing import Generator
 
 DB_PATH = os.getenv(
-    "FOOD_DELIVERY_DB", str(Path(__file__).with_name("food_delivery.db"))
+    'FOOD_DELIVERY_DB', str(Path(__file__).with_name('food_delivery.db'))
 )
 
 SCHEMA_SQL = """
@@ -127,7 +127,7 @@ CREATE TABLE IF NOT EXISTS reviews (
 );
 CREATE INDEX IF NOT EXISTS idx_reviews_user       ON reviews(user_id);
 CREATE INDEX IF NOT EXISTS idx_reviews_restaurant ON reviews(restaurant_id);
-"""
+"""  # noqa: E501
 
 
 def _row_factory(cursor: sqlite3.Cursor, row: tuple) -> dict:
@@ -139,12 +139,12 @@ def get_connection(db_path: str = DB_PATH) -> sqlite3.Connection:
     """Open a connection with sensible defaults."""
     conn = sqlite3.connect(db_path)
     conn.row_factory = _row_factory
-    conn.execute("PRAGMA foreign_keys = ON")
+    conn.execute('PRAGMA foreign_keys = ON')
     return conn
 
 
 @contextmanager
-def get_db(db_path: str = DB_PATH) -> Generator[sqlite3.Connection, None, None]:
+def get_db(db_path: str = DB_PATH) -> Generator[sqlite3.Connection]:
     """Context manager that commits on success, rolls back on error."""
     conn = get_connection(db_path)
     try:
@@ -163,6 +163,6 @@ def init_db(db_path: str = DB_PATH) -> None:
         conn.executescript(SCHEMA_SQL)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     init_db()
-    print(f"Database initialised at {DB_PATH}")
+    print(f'Database initialised at {DB_PATH}')  # noqa: T201

@@ -1,0 +1,138 @@
+[tool.ruff]
+
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".ipynb_checkpoints",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pyenv",
+    ".pytest_cache",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    ".vscode",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "site-packages",
+    "venv",
+    "yolo_minimal"
+]
+
+line-length = 88
+indent-width = 4
+target-version = "py313"
+
+[tool.ruff.lint]
+select = [
+    "A",     # flake8-builtins — warns when shadowing Python builtins
+    "ANN",   # flake8-annotations — enforces type annotations
+    "ARG",   # flake8-unused-arguments — flags unused function arguments
+    "B",     # flake8-bugbear — finds likely bugs and design issues
+    "BLE",   # flake8-blind-except — disallows blind `except Exception`
+    "C4",    # flake8-comprehensions — suggests better list/dict/set comprehensions
+    "C90",   # mccabe — checks function complexity
+    "COM",   # flake8-commas — enforces trailing commas
+    "D",     # pydocstyle — docstring style conventions
+    "DTZ",   # flake8-datetimez — enforces timezone-aware datetimes
+    "E",     # pycodestyle errors
+    "EM",    # flake8-errmsg — improves exception messages
+    "ERA",   # eradicate — detects commented-out code
+    "F",     # pyflakes — detects unused imports, undefined names, etc.
+    "FA",    # flake8-future-annotations — enforces `from __future__ import annotations`
+    "FBT",   # flake8-boolean-trap — flags boolean positional arguments
+    "FIX",   # flake8-fixme — flags TODO/FIXME/HACK comments
+    "FLY",   # flynt — suggests f-string conversions
+    "FURB",  # refurb — modernises Python code
+    "G",     # flake8-logging-format — enforces good logging practices
+    "I",     # isort — sorts and organises imports
+    "ICN",   # flake8-import-conventions — enforces standard import aliases (e.g. `import numpy as np`)
+    "INP",   # flake8-no-pep420 — disallows implicit namespace packages
+    "INT",   # flake8-gettext — checks internationalisation
+    "ISC",   # flake8-implicit-str-concat — flags implicit string concatenation
+    "LOG",   # flake8-logging — checks logging usage
+    "N",     # pep8-naming — enforces PEP 8 naming conventions
+    "PERF",  # perflint — flags performance anti-patterns
+    "PGH",   # pygrep-hooks — misc regex-based checks
+    "PIE",   # flake8-pie — misc code quality improvements
+    "PL",    # pylint — large set of general Python checks
+    "PT",    # flake8-pytest-style — enforces pytest best practices
+    "PTH",   # flake8-use-pathlib — prefers pathlib over os.path
+    "PYI",   # flake8-pyi — checks .pyi stub files
+    #"Q",     # flake8-quotes — enforces consistent quote style
+    "RET",   # flake8-return — checks return statement consistency
+    "RSE",   # flake8-raise — checks raise statement style
+    "RUF",   # ruff-specific rules
+    "S",     # flake8-bandit — security checks
+    "SIM",   # flake8-simplify — suggests code simplifications
+    "SLF",   # flake8-self — flags private member access
+    "SLOT",  # flake8-slots — enforces __slots__ on certain classes
+    "T10",   # flake8-debugger — detects debugger calls (pdb, breakpoint)
+    "T20",   # flake8-print — flags print() statements
+    "TCH",   # flake8-type-checking — moves type-only imports into TYPE_CHECKING blocks
+    "TD",    # flake8-todos — enforces structured TODO comments
+    "TID",   # flake8-tidy-imports — enforces clean import style
+    "TRY",   # tryceratops — best practices for try/except blocks
+    "UP",    # pyupgrade — modernises Python syntax for target version
+    "W",     # pycodestyle warnings
+    "YTT",   # flake8-2020 — checks for misuse of sys.version
+]
+
+ignore = [
+    "D100",    # Missing docstring in public module
+    "D104",    # Missing docstring in public package
+    "D203",    # one-blank-line-before-class (conflicts with D211)
+    "D213",    # multi-line-summary-second-line (conflicts with D212)
+    "COM812",  # missing-trailing-comma (conflicts with formatter)
+    "ISC001",  # single-line-implicit-string-concatenation (conflicts with formatter)
+    "INP001",
+    "PLR0913",
+    "TC003",
+]
+
+fixable = ["ALL"]
+unfixable = []
+
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+[tool.ruff.lint.mccabe]
+max-complexity = 10
+
+[tool.ruff.lint.pylint]
+max-args = 5
+max-branches = 12
+max-returns = 6
+max-statements = 50
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"  # or "numpy" / "pep257"
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = [
+    "S101",   # allow assert in tests
+    "ANN",    # don't require type annotations in tests
+    "D",      # don't require docstrings in tests
+    "FBT",    # allow boolean positional args in tests
+    "SLF001", # allow private member access in tests
+    "ARG",    # allow unused arguments in tests (fixtures)
+    "PLR2004",# allow magic values in tests
+]
+
+[tool.ruff.format]
+quote-style = "single"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+docstring-code-format = true
+docstring-code-line-length = 100

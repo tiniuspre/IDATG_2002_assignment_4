@@ -3,6 +3,8 @@
 
 ## Seeder
 
+Populates the DB with fake data
+
 ```
 python seed.py                # default: 50 users, 15 restaurants, 200 orders
 python seed.py --users 100 --restaurants 30 --orders 500
